@@ -13,10 +13,12 @@ from monai.metrics import compute_meandice, compute_average_surface_distance
 def get_test_args_parser():
     parser = argparse.ArgumentParser(description='Test Configuration')
 
+    parser.add_argument("--mode", type=str, default='test')
     parser.add_argument("--pretrain", type=str, default='/path/to/pretrained_model')
     parser.add_argument("--data_dir", type=str, default='/path/to/data')
     parser.add_argument("--dataset_codes", type=list, default=['0003'])
     parser.add_argument("--patch_size", default=(96, 96, 96), type=tuple)
+    parser.add_argument("--spatial_size", default=(32, 512, 512), type=tuple)
     parser.add_argument("--work_dir", type=str, default='./work_dir')
     parser.add_argument("--config_file", type=str, default='./path/to/config_file')
     parser.add_argument("--sam2_ckpt", type=str, default='./path/to/sam2_ckpt')

@@ -60,22 +60,20 @@ def download_image(dataset_name, image_slice, label_slice, output_path):
 
 
 if __name__ == '__main__':
-    dataset_name = "AbdomenCT-1k"
-    image_path = '../input/AbdomenCT-1k/Case_00888_0000.nii.gz'
-    label_path = '../input/AbdomenCT-1k/Case_00888_split_no.nii.gz.seg.nrrd'
+    dataset_name = "..."
+    image_path = '../input/...'
+    label_path = '../input/...'
     if label_path.endswith("seg.nrrd"):
         model_name = label_path.split("/")[-1].split(".")[0].split("_")[-1]
     else:
         model_name = "GT"
     output_name = image_path.split('/')[3].split('.')[0]
-    output_path = os.path.join('../output/AbdomenCT-1k/', output_name)
+    output_path = os.path.join('../output/.../', output_name)
     if not os.path.exists(output_path):
         os.makedirs(output_path)
 
     png_path = os.path.join(output_path, model_name + ".png")
     print(f"output path : {png_path}")
-    # 409 61/72
-    # 888 63
     label_slice_index = 67
     image_slice_index = 67
 

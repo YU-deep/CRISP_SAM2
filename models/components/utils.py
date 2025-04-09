@@ -7,7 +7,6 @@ from typing import Tuple, Union
 import torch
 import torch.nn as nn
 from mmcv.cnn.bricks import Swish, build_norm_layer
-from torch.nn import functional as F
 from torch.nn.init import _calculate_fan_in_and_fan_out, trunc_normal_
 from mmdet.registry import MODELS
 from mmdet.utils import OptConfigType

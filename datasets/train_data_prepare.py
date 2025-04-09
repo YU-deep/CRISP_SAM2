@@ -17,12 +17,12 @@ from monai.transforms import (
 def set_parse():
     # %% set up parser
     parser = argparse.ArgumentParser()
-    parser.add_argument("-category", default=['liver', 'right kidney', 'spleen', 'pancreas', 'aorta', 'inferior vena cava', 'right adrenal gland', 'left adrenal gland', 'gallbladder', 'esophagus', 'stomach', 'duodenum', 'left kidney'], type=list)
-    parser.add_argument("-image_dir", type=str, required=True)
-    parser.add_argument("-label_dir", type=str, required=True)
-    parser.add_argument("-dataset_code", type=str, required=True)
-    parser.add_argument("-save_root", type=str, required=True)
-    parser.add_argument("-test_ratio", type=float, required=True)
+    parser.add_argument("--category", default=["liver", "spleen", "stomach", "gallbladder", "esophagus", "pancreas", "duodenum", "aorta", "bladder", "inferior vena cava", "left kidney", "right kidney", "left adrenal gland", "right adrenal gland", "left femur", "right femur", "left lung", "right lung"], type=list)
+    parser.add_argument("--image_dir", type=str, required=True)
+    parser.add_argument("--label_dir", type=str, required=True)
+    parser.add_argument("--dataset_code", type=str, required=True)
+    parser.add_argument("--save_root", type=str, required=True)
+    parser.add_argument("--test_ratio", type=float, required=True)
     
     args = parser.parse_args()
     return args

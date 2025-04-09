@@ -20,9 +20,16 @@ def set_parse():
     parser.add_argument("--resume", type=str, default='')
     parser.add_argument("--data_dir", type=str, default='')
     parser.add_argument("--dataset_codes", type=list, default=['0003'])
+    parser.add_argument("--mode", type=str, default='train')
 
     # config
     parser.add_argument("--patch_size", default=(96, 96, 96), type=tuple)
+    parser.add_argument("--spatial_size", default=(32, 512, 512), type=tuple)
+    parser.add_argument("--rand_flipped_prob", default=0.2, type=float, help="RandFlipd aug probability")
+    parser.add_argument("--rand_scale_intensityd_prob", default=0.1, type=float,
+                        help="RandScaleIntensityd aug probability")
+    parser.add_argument("--rand_shift_intensityd_prob", default=0.1, type=float,
+                        help="RandShiftIntensityd aug probability")
     parser.add_argument('--work_dir', type=str, default='./work_dir')
     parser.add_argument("--clip_text_ckpt", type=str, default='./path/to/clip_text_ckpt')
     parser.add_argument("--clip_image_ckpt", type=str, default='./path/to/clip_image_ckpt')

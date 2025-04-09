@@ -26,10 +26,6 @@ def split_left_right(file_name, output_path):
 
 
 def generate_point_prompt(mask):
-    """
-    :param mask:
-    :return: (i0, j0)
-    """
     rows, cols = np.where(mask)
     x_min, x_max = cols.min(), cols.max()
     y_min, y_max = rows.min(), rows.max()
@@ -47,10 +43,6 @@ def generate_point_prompt(mask):
 
 
 def generate_bbox_prompt(mask):
-    """
-    :param mask:
-    :return: (x1, y1, x2, y2)
-    """
     rows, cols = np.where(mask)
     i1 = int(np.mean(rows))
     j1 = int(np.mean(cols))

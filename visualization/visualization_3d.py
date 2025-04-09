@@ -25,11 +25,11 @@ if __name__ == '__main__':
     ROTATE_X = 270
     ROTATE_Y = 0
     ROTATE_Z = 0
-    model_name = 'good'
-    dataset_name = 'AMOS22/'
+    model_name = 'ours'
+    dataset_name = '.../'
     MASK_COLORS = get_mask_colors(dataset_name)
     MASK_OPACITY = get_mask_opacity(dataset_name)
-    file_name = '../input/AMOS22/amos_0409_GT.nii.gz.seg.nrrd'
+    file_name = '../input/...'
     if file_name.endswith(".mhd"):
         file_name = mhd_to_nii(file_name)
         output_name = file_name.split('/')[3].split('.')[12]
@@ -110,8 +110,3 @@ if __name__ == '__main__':
         writer.SetInputConnection(w2if.GetOutputPort())
         writer.Write()
 
-    # # interactor
-    # interactor = vtk.vtkRenderWindowInteractor()
-    # interactor.SetRenderWindow(render_window)
-    # interactor.Initialize()
-    # interactor.Start()

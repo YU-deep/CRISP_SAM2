@@ -10,6 +10,19 @@ import ast
 from scipy import sparse
 import random
 import json
+from torch.utils.data import DataLoader
+from monai.transforms import (
+    Compose,
+    AddChanneld,
+    CropForegroundd,
+    SpatialPadd,
+    Resized,
+    RandCropByPosNegLabeld,
+    RandFlipd,
+    RandScaleIntensityd,
+    RandShiftIntensityd,
+    ToTensord,
+)
 
 def read_json_file(file_path):
     try:
@@ -213,52 +226,85 @@ def build_concat_dataset(root_path, dataset_codes, transform):
 
 
 def get_loader(args):
-    train_transform = transforms.Compose(
-        [
-            transforms.AddChanneld(keys=["image"]),
-            DimTranspose(keys=["image", "label"]),
-            MinMaxNormalization(),
-            transforms.CropForegroundd(keys=["image", "label"], source_key="image"),
-            transforms.SpatialPadd(keys=["image", "label"], spatial_size=args.spatial_size,
-                                   mode='constant'),
-            transforms.OneOf(transforms=[
-                transforms.Resized(keys=["image", "label"], spatial_size=args.spatial_size),
-                transforms.RandCropByPosNegLabeld(
-                    keys=["image", "label"],
-                    label_key="label",
-                    spatial_size=args.spatial_size,
-                    pos=2,
-                    neg=1,
-                    num_samples=1,
-                    image_key="image",
-                    image_threshold=0,
+    if args.mode == 'train':
+        train_transform = Compose(
+            [
+                AddChanneld(keys=["image"]),
+                DimTranspose(keys=["image", "label"]),
+                MinMaxNormalization(),
+                CropForegroundd(keys=["image", "label"], source_key="image"),
+                SpatialPadd(keys=["image", "label"], spatial_size=args.spatial_size,
+                            mode='constant'),
+                transforms.OneOf(transforms=[
+                    Resized(keys=["image", "label"], spatial_size=args.spatial_size),
+                    RandCropByPosNegLabeld(
+                        keys=["image", "label"],
+                        label_key="label",
+                        spatial_size=args.spatial_size,
+                        pos=2,
+                        neg=1,
+                        num_samples=1,
+                        image_key="image",
+                        image_threshold=0,
+                    ),
+                ],
+                    weights=[1, 1]
                 ),
-            ],
-                weights=[1, 1]
-            ),
-            transforms.RandFlipd(keys=["image", "label"], prob=args.RandFlipd_prob, spatial_axis=0),
-            transforms.RandFlipd(keys=["image", "label"], prob=args.RandFlipd_prob, spatial_axis=1),
-            transforms.RandFlipd(keys=["image", "label"], prob=args.RandFlipd_prob, spatial_axis=2),
-            transforms.RandScaleIntensityd(keys="image", factors=0.1, prob=args.RandScaleIntensityd_prob),
-            transforms.RandShiftIntensityd(keys="image", offsets=0.1, prob=args.RandShiftIntensityd_prob),
-            transforms.Resized(keys=["image", "label"], spatial_size=args.spatial_size),
-            transforms.ToTensord(keys=["image", "label"]),
-        ]
-    )
+                RandFlipd(keys=["image", "label"], prob=args.rand_flipped_prob, spatial_axis=0),
+                RandFlipd(keys=["image", "label"], prob=args.rand_flipped_prob, spatial_axis=1),
+                RandFlipd(keys=["image", "label"], prob=args.rand_flipped_prob, spatial_axis=2),
+                RandScaleIntensityd(keys="image", factors=0.1, prob=args.rand_scale_intensityd_prob),
+                RandShiftIntensityd(keys="image", offsets=0.1, prob=args.rand_shift_intensityd_prob),
+                Resized(keys=["image", "label"], spatial_size=args.spatial_size),
+                ToTensord(keys=["image", "label"]),
+            ]
+        )
 
-    print(f'----- train on combination dataset -----')
-    combination_train_ds = build_concat_dataset(root_path=args.data_dir, dataset_codes=args.dataset_codes,
-                                                transform=train_transform)
-    train_sampler = BatchedDistributedSampler(combination_train_ds, shuffle=True,
-                                              batch_size=args.batch_size) if args.dist else None
-    train_loader = data.DataLoader(
-        combination_train_ds,
-        batch_size=args.batch_size,
-        shuffle=(train_sampler is None),
-        num_workers=args.num_workers,
-        sampler=train_sampler,
-        pin_memory=True,
-        persistent_workers=True,
-        collate_fn=collate_fn,
-    )
-    return train_loader
+        print(f'----- train on combination dataset -----')
+        combination_train_ds = build_concat_dataset(root_path=args.data_dir, dataset_codes=args.dataset_codes,
+                                                    transform=train_transform)
+        train_sampler = BatchedDistributedSampler(combination_train_ds, shuffle=True,
+                                                  batch_size=args.batch_size) if args.dist else None
+        train_loader = DataLoader(
+            combination_train_ds,
+            batch_size=args.batch_size,
+            shuffle=(train_sampler is None),
+            num_workers=args.num_workers,
+            sampler=train_sampler,
+            pin_memory=True,
+            persistent_workers=True,
+            collate_fn=collate_fn,
+        )
+        return train_loader
+    elif args.mode == 'test':
+        test_transform = Compose(
+            [
+                AddChanneld(keys=["image"]),
+                DimTranspose(keys=["image", "label"]),
+                MinMaxNormalization(),
+                CropForegroundd(keys=["image", "label"], source_key="image"),
+                SpatialPadd(keys=["image", "label"], spatial_size=args.spatial_size,
+                            mode='constant'),
+                Resized(keys=["image", "label"], spatial_size=args.spatial_size),
+                ToTensord(keys=["image", "label"]),
+            ]
+        )
+
+        print(f'----- test on combination dataset -----')
+        combination_test_ds = build_concat_dataset(root_path=args.data_dir, dataset_codes=args.dataset_codes,
+                                                   transform=test_transform)
+        test_sampler = BatchedDistributedSampler(combination_test_ds, shuffle=False,
+                                                 batch_size=args.batch_size) if args.dist else None
+        test_loader = DataLoader(
+            combination_test_ds,
+            batch_size=args.batch_size,
+            shuffle=False,
+            num_workers=args.num_workers,
+            sampler=test_sampler,
+            pin_memory=True,
+            persistent_workers=True,
+            collate_fn=collate_fn,
+        )
+        return test_loader
+    else:
+        raise ValueError("mode should be either 'train' or 'test'")
