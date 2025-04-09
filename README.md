@@ -1,0 +1,50 @@
+# CRISP-SAM2 : SAM2 with Cross-Modal Interaction and Semantic Prompting for Multi-Organ Segmentation
+#### Anonymous Authors
+#### Submission ID: 2118
+
+ 
+[//]: # (## 🌟Overview)
+
+[//]: # ()
+[//]: # (![overview]&#40;overview_new.pdf "overview"&#41;)
+
+## 🛠️ Quick Start 
+## Installation
+It is highly recommended to employ a virtual environment with Python >= 3.10, Pytorch >= 2.5.1 and corresponding CUDA.
+```
+cd CRISP-SAM2
+conda env create -f env.yml
+conda activate CRISP_SAM2
+```
+
+
+## Dataset Preparation
+- ### Visual Inputs
+| Datasets     | Links                                                                                                                                                   |
+|--------------|---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| M3D-Seg      | https://github.com/BAAIDCAI/M3D/<br/>https://huggingface.co/datasets/GoodBaiBai88/M3D-Seg/<br/>https://www.modelscope.cn/datasets/GoodBaiBai88/M3D-Seg/ |
+| MSD-Spleen   | http://medicaldecathlon.com/                                                                                                                            |
+| Pancreas-CT  | https://wiki.cancerimagingarchive.net/display/public/pancreas-ct/                                                                                       |
+| LUNA16       | https://luna16.grand-challenge.org/Data/                                                                                                                |
+| AbdomenCT-1k | https://github.com/JunMa11/AbdomenCT-1K/                                                                                                                |
+| WORD         | https://paperswithcode.com/dataset/word/                                                                                                                |
+| FLARE22      | https://flare22.grand-challenge.org/                                                                                                                    |
+| AMOS22       | https://amos22.grand-challenge.org/                                                                                                                     |
+
+- ### Textual Inputs
+The descriptive definitions and descriptions are stored in 'term_dictionary.json', and compared to the original M3D-Seg joint dataset, we add supplementary sentences. Here, the dictionary can be expanded arbitrarily as required.
+
+## Train & Test
+- ### Training process
+We highly recommend that the whole training process should be conducted on at least 8 A100-80G GPUs.
+```
+bash scripts/train.sh
+```
+- ### Test process
+```
+bash scripts/test.sh
+```
+
+
+## Visualization
+We provide comprehensive visualization utils, including 2D, 3D and local area visualization.
