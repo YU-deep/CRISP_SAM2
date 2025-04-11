@@ -113,7 +113,7 @@ class FpnNeckInjection(nn.Module):
         pos = [None] * len(self.convs)
         assert len(xs) == len(self.convs)
 
-        shared_features = self.shared_mlp(injection)
+        shared_features = self.shared_mlp(injection) + injection
         # fpn forward pass
         # see https://github.com/facebookresearch/detectron2/blob/main/detectron2/modeling/backbone/fpn.py
         prev_features = None
