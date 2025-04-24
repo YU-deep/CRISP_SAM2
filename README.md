@@ -13,7 +13,7 @@
 It is highly recommended to employ a virtual environment with Python >= 3.10, Pytorch >= 2.5.1 and corresponding CUDA.
 ```
 cd CRISP-SAM2
-conda env create -f env.yml
+conda env create -f env_config.yml
 conda activate CRISP_SAM2
 ```
 
