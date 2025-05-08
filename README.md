@@ -3,12 +3,11 @@
 #### Submission ID: 2118
 
  
-[//]: # (## 🌟Overview)
+## 🌟Overview
 
-[//]: # ()
-[//]: # (![overview]&#40;overview_new.pdf "overview"&#41;)
+![overview](static/overview.png)
 
-## 🛠️ Quick Start 
+## 🛠️ Quick Start
 ## Installation
 It is highly recommended to employ a virtual environment with Python >= 3.10, Pytorch >= 2.5.1 and corresponding CUDA.
 ```
@@ -48,3 +47,5 @@ bash scripts/test.sh
 
 ## Visualization
 We provide comprehensive visualization utils, including 2D, 3D and local area visualization.
+
+![visualization](static/visualization.png)
