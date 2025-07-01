@@ -1,5 +1,5 @@
 # CRISP-SAM2 : SAM2 with Cross-Modal Interaction and Semantic Prompting for Multi-Organ Segmentation
-#### Xinlei Yu$^1$, Chanmiao Wang$^2$, Hui Jin$^1$, Ahmed Elazab$^3$, Gangyong Jia$^1$, Xiang Wan$^2$, Changqing Zou$^4$, Ruiquan Ge$^1$
+#### Xinlei Yu 1, Chanmiao Wang 2, Hui Jin 1, Ahmed Elazab 3, Gangyong Jia 1, Xiang Wan 2, Changqing Zou 4, Ruiquan Ge 1
 #### 1 Hangzhou Dianzi University, 2 Shenzhen Research Institute of Big Data, 3 Shenzhen University, 4 Zhejiang University
 
  
