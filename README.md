@@ -1,4 +1,4 @@
-# CRISP-SAM2 : SAM2 with Cross-Modal Interaction and Semantic Prompting for Multi-Organ Segmentation
+# (ACM MM 25) CRISP-SAM2 : SAM2 with Cross-Modal Interaction and Semantic Prompting for Multi-Organ Segmentation
 #### Xinlei Yu 1, Changmiao Wang 2, Hui Jin 1, Ahmed Elazab 3, Gangyong Jia 1, Xiang Wan 2, Changqing Zou 4, Ruiquan Ge 1
 #### 1 Hangzhou Dianzi University, 2 Shenzhen Research Institute of Big Data, 3 Shenzhen University, 4 Zhejiang University
 
@@ -49,3 +49,14 @@ bash scripts/test.sh
 We provide comprehensive visualization utils, including 2D, 3D and local area visualization.
 
 ![visualization](static/visualization.png)
+
+## Citation
+If you have any questions about this work, please feel free to contact me at: xinleiyu88@gmail.com. And if you want to cite us, please add this in your paper:
+```
+@article{yu2025crisp,
+  title={CRISP-SAM2: SAM2 with Cross-Modal Interaction and Semantic Prompting for Multi-Organ Segmentation},
+  author={Yu, Xinlei and Wang, Changmiao and Jin, Hui and Elazab, Ahmed and Jia, Gangyong and Wan, Xiang and Zou, Changqing and Ge, Ruiquan},
+  journal={arXiv preprint arXiv:2506.23121},
+  year={2025}
+}
+```
