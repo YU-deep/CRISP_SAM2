@@ -49,6 +49,7 @@ bash scripts/test.sh
 We provide comprehensive visualization utils, including 2D, 3D and local area visualization.
 
 ![visualization](static/visualization.png)
+![visualization](static/visualization_appendix.png)
 
 ## Citation
 If you have any questions about this work, please feel free to contact me at: xinleiyu88@gmail.com. And if you want to cite us, please add this in your paper:
